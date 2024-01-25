@@ -1,16 +1,15 @@
 .SUFFIXES:
 .SUFFIXES: .o .cpp
+#============================================================
+TARGET	= diff
 
-TARGET	=  findiff
+C_SOURCES =  findiff_soln.cpp
+C_OBJS     =  findiff_soln.o 
+MY_INCLUDES = 
 
-C_SOURCES =  findiff.cpp
-C_OBJS     =  findiff.o
-MY_INCLUDES =
-# stuff.h
 
-CCX = g++ -O2
-#CXXFLAGS = -g -std=c++14
-# -Wall
+CCX = g++
+CXXFLAGS = -g -Wall
 
 #============================================================
 all: $(TARGET)
@@ -24,14 +23,22 @@ $(TARGET) :   $(C_OBJS)
 # Implicit rules: $@ = target name, $< = first prerequisite name, $^ = name of all prerequisites
 #============================================================
 
-ALL_SOURCES = Makefile $(C_SOURCES) $(MY_INCLUDES)
+NOTES =
 
-NOTES = SeriesExpansion.nb
+
+ALL_SOURCES = Makefile $(C_SOURCES) $(MY_INCLUDES) $(NOTES)
+
+ALL_FILES = $(ALL_SOURCES)  $(NOTES)
+
+#Jacobian.nb
+
+
 clean:
-	rm -f $(TARGET) $(C_OBJS) core 
+	rm -f $(TARGET) $(C_OBJS) core *.tar *~*~ 
 
-tar: $(ALL_SOURCES) $(NOTES)
-	tar cvf $(TARGET).tar $(ALL_SOURCES)  $(NOTES)
+tar: $(ALL_FILES) 
+	tar -cvjf $(TARGET).tar $(ALL_FILES)
+
 
 $(TARGET).ps: $(ALL SOURCES)
 	enscript -pcode.ps $(ALL_SOURCES)
