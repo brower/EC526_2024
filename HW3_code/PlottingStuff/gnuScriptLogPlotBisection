@@ -1,0 +1,15 @@
+plot "rootData.dat"  using (log($1)):($2) with lines
+f(x) = a + b*x
+fit f(x)  "rootData.dat"  using (log($1)):($2) via a,b
+replot f(x)
+# add this if you want to see what happens with log(log(N)) term included.
+#g(x) = a + b*x + c*log(x)   
+#fit g(x)  "rootData.dat"  using (log($1)):($2) via a,b, c
+#replot g(x)
+set output "LogNBisection.eps"
+set terminal postscript color
+set title " Iterations vs log(1/tol) for Bisection Root Finding: f(x) = a + b log(1/tol)"
+set xlabel "log(1/tolerance)"
+set ylabel "Number of Iterations"
+replot
+set term x11
