@@ -37,8 +37,8 @@
 // ./poisson2d [NITER [NY [NX]]]
 int main(int argc, char** argv)
 {
-    int ny = 1024;
-    int nx = 1024;
+    int ny = 2048;
+    int nx = 2048;
     int iter_max = 100;
     const real tol = 1.0e-5;
 
@@ -102,15 +102,16 @@ int main(int argc, char** argv)
     int iter  = 0;
     real error = 1.0;
 
+    #pragma acc data copy(A[0:nx*ny]) copyin(rhs[0:nx*ny]) create(Anew[0:nx*ny])
     while ( error > tol && iter < iter_max )
     {
         error = 0.0;
 
         // Jacobi kernel
         #pragma acc parallel loop reduction(max:error)
-        for (int ix = ix_start; ix < ix_end; ix++)
+        for (int iy = iy_start; iy < iy_end; iy++)
         {
-            for (int iy = iy_start; iy < iy_end; iy++)
+            for (int ix = ix_start; ix < ix_end; ix++)
             {
                 Anew[iy*nx+ix] = -0.25 * (rhs[iy*nx+ix] - ( A[iy*nx+ix+1] + A[iy*nx+ix-1]
                                                        + A[(iy-1)*nx+ix] + A[(iy+1)*nx+ix] ));

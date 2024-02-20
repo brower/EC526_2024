@@ -10,7 +10,7 @@ CFLAGS = -DUSE_DOUBLE
 ifeq ($(ACCEL_TYPE),PGI)
 	CFLAGS += -fast
 else ifeq ($(ACCEL_TYPE),PGI-tesla)
-	CFLAGS += -Minfo=accel -fast -acc -ta=tesla:cc60
+	CFLAGS += -Minfo=accel -fast -acc -ta=tesla:cc70
 else ifeq ($(ACCEL_TYPE),PGI-multicore)
 	CFLAGS += -Minfo=accel -fast -acc -ta=multicore
 endif
