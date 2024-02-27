@@ -1,0 +1,43 @@
+To run  on command line.
+
+module load gcc
+module load  mvapich
+
+mpicc  mpi_hello.cpp -o mpi_hello
+
+mpirun -np  64  ./mpi_hello
+
+The default here is one node with -np # treads
+To allocate more than one node you need to use
+
+//qrsh -pe mpi_12_tasks_per_node 24
+
+qrsh -pe mpi_16_tasks_per_node 64 // full processor.
+
+qrsh -pe mpi_8_tasks_per_node 64  // half processors
+
+which is "-pe mpi_12_tasks_per_node"  with 24 total
+(i.e 24/12 nodes) This take time to get the node so
+let's not do this now. 
+
+See very nice BU SCC tutorial on MPI.
+
+https://www.bu.edu/tech/support/research/training-consulting/online-tutorials/mpi/
+
+Also our example are a bit simpler from
+
+https://mpitutorial.com/tutorials/mpi-hello-world/
+
+See Laplace Solver
+http://www.bu.edu/tech/support/research/training-consulting/online-tutorials/mpi/alliance/solvers/
+
+To submit into a queue
+
+qsub ./submit_mpi_hello.sh
+
+http://www.bu.edu/tech/support/research/system-usage/running-jobs/submitting-jobs/
+
+look at it by
+
+qstat -u brower
+ 

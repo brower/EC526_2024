@@ -1,0 +1,16 @@
+Run on the command line:
+
+module load gcc/5.3.0
+module load mpich/3.2
+
+Various commands to compile:
+
+mpicxx -std=c++11 integrate_sin_timing.cpp -o integrate_sin_timing
+g++ -fopenmp -std=c++11 integrate_2d_omp_timing.cpp -o integrate_2d_omp_timing
+mpicxx -std=c++11 integrate_2d_mpi_timing.cpp -o integrate_2d_mpi_timing
+
+The output executables are chosen to match the submit scripts,
+which can just be submitted with
+
+qsub [whatever].sh
+
