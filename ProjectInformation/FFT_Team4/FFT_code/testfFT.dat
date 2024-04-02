@@ -1,0 +1,163 @@
+ x = 0  F =    (-4.000,0.000)
+ x = 1  F =    (2.296,0.000)
+ x = 2  F =    (6.586,0.000)
+ x = 3  F =    (-1.848,0.000)
+ x = 4  F =    (-6.000,0.000)
+ x = 5  F =    (5.543,0.000)
+ x = 6  F =    (12.243,0.000)
+ x = 7  F =    (-0.765,0.000)
+ x = 8  F =    (-12.000,0.000)
+ x = 9  F =    (-2.296,0.000)
+ x = 10  F =    (9.414,0.000)
+ x = 11  F =    (1.848,0.000)
+ x = 12  F =    (-10.000,0.000)
+ x = 13  F =    (-5.543,0.000)
+ x = 14  F =    (3.757,0.000)
+ x = 15  F =    (0.765,0.000)
+
+Test  Slow FT 
+ k = 0  Ftilde =   (0.000,0.000)
+ k = 1  Ftilde =   (0.000,16.000)
+ k = 2  Ftilde =   (-0.000,-0.000)
+ k = 3  Ftilde =   (32.000,0.000)
+ k = 4  Ftilde =   (-64.000,-0.000)
+ k = 5  Ftilde =   (-0.000,-0.000)
+ k = 6  Ftilde =   (0.000,-0.000)
+ k = 7  Ftilde =   (-0.000,-0.000)
+ k = 8  Ftilde =   (-0.000,0.000)
+ k = 9  Ftilde =   (-0.000,0.000)
+ k = 10  Ftilde =   (0.000,0.000)
+ k = 11  Ftilde =   (-0.000,0.000)
+ k = 12  Ftilde =   (-64.000,0.000)
+ k = 13  Ftilde =   (32.000,-0.000)
+ k = 14  Ftilde =   (-0.000,0.000)
+ k = 15  Ftilde =   (0.000,-16.000)
+ x =    0 Compare newF[x] :           (-4.000,-0.000) with F[x]  (-4.000,0.000)
+ x =    1 Compare newF[x] :            (2.296,-0.000) with F[x]  (2.296,0.000)
+ x =    2 Compare newF[x] :            (6.586,-0.000) with F[x]  (6.586,0.000)
+ x =    3 Compare newF[x] :           (-1.848,-0.000) with F[x]  (-1.848,0.000)
+ x =    4 Compare newF[x] :            (-6.000,0.000) with F[x]  (-6.000,0.000)
+ x =    5 Compare newF[x] :             (5.543,0.000) with F[x]  (5.543,0.000)
+ x =    6 Compare newF[x] :            (12.243,0.000) with F[x]  (12.243,0.000)
+ x =    7 Compare newF[x] :           (-0.765,-0.000) with F[x]  (-0.765,0.000)
+ x =    8 Compare newF[x] :           (-12.000,0.000) with F[x]  (-12.000,0.000)
+ x =    9 Compare newF[x] :           (-2.296,-0.000) with F[x]  (-2.296,0.000)
+ x =   10 Compare newF[x] :             (9.414,0.000) with F[x]  (9.414,0.000)
+ x =   11 Compare newF[x] :             (1.848,0.000) with F[x]  (1.848,0.000)
+ x =   12 Compare newF[x] :           (-10.000,0.000) with F[x]  (-10.000,0.000)
+ x =   13 Compare newF[x] :            (-5.543,0.000) with F[x]  (-5.543,0.000)
+ x =   14 Compare newF[x] :             (3.757,0.000) with F[x]  (3.757,0.000)
+ x =   15 Compare newF[x] :            (0.765,-0.000) with F[x]  (0.765,0.000)
+
+ Test Iterative   FFT 
+ k = 0  Ftilde =   (0.000,0.000)
+ k = 1  Ftilde =   (0.000,16.000)
+ k = 2  Ftilde =   (-0.000,-0.000)
+ k = 3  Ftilde =   (32.000,0.000)
+ k = 4  Ftilde =   (-64.000,-0.000)
+ k = 5  Ftilde =   (-0.000,0.000)
+ k = 6  Ftilde =   (0.000,-0.000)
+ k = 7  Ftilde =   (-0.000,-0.000)
+ k = 8  Ftilde =   (-0.000,0.000)
+ k = 9  Ftilde =   (-0.000,0.000)
+ k = 10  Ftilde =   (0.000,0.000)
+ k = 11  Ftilde =   (-0.000,0.000)
+ k = 12  Ftilde =   (-64.000,0.000)
+ k = 13  Ftilde =   (32.000,-0.000)
+ k = 14  Ftilde =   (-0.000,0.000)
+ k = 15  Ftilde =   (0.000,-16.000)
+ x =    0 Compare Fnew[x] :            (-4.000,0.000) with F[x]  (-4.000,0.000)
+ x =    1 Compare Fnew[x] :            (2.296,-0.000) with F[x]  (2.296,0.000)
+ x =    2 Compare Fnew[x] :            (6.586,-0.000) with F[x]  (6.586,0.000)
+ x =    3 Compare Fnew[x] :            (-1.848,0.000) with F[x]  (-1.848,0.000)
+ x =    4 Compare Fnew[x] :            (-6.000,0.000) with F[x]  (-6.000,0.000)
+ x =    5 Compare Fnew[x] :            (5.543,-0.000) with F[x]  (5.543,0.000)
+ x =    6 Compare Fnew[x] :            (12.243,0.000) with F[x]  (12.243,0.000)
+ x =    7 Compare Fnew[x] :            (-0.765,0.000) with F[x]  (-0.765,0.000)
+ x =    8 Compare Fnew[x] :           (-12.000,0.000) with F[x]  (-12.000,0.000)
+ x =    9 Compare Fnew[x] :            (-2.296,0.000) with F[x]  (-2.296,0.000)
+ x =   10 Compare Fnew[x] :             (9.414,0.000) with F[x]  (9.414,0.000)
+ x =   11 Compare Fnew[x] :             (1.848,0.000) with F[x]  (1.848,0.000)
+ x =   12 Compare Fnew[x] :          (-10.000,-0.000) with F[x]  (-10.000,0.000)
+ x =   13 Compare Fnew[x] :           (-5.543,-0.000) with F[x]  (-5.543,0.000)
+ x =   14 Compare Fnew[x] :             (3.757,0.000) with F[x]  (3.757,0.000)
+ x =   15 Compare Fnew[x] :            (0.765,-0.000) with F[x]  (0.765,0.000)
+
+ Test  FFTrecursion 
+ Calls at N = 16
+Nfft =  16
+Enters at  N 16
+Calls at twice at N =  8
+Nfft =  16
+Enters at  N 8
+Calls at twice at N =  4
+Nfft =  16
+Enters at  N 4
+Calls at twice at N =  2
+Nfft =  16
+Enters at  N 2
+Nfft =  16
+Enters at  N 2
+ at level =  4 Combine two  N =  2
+Nfft =  16
+Enters at  N 4
+Calls at twice at N =  2
+Nfft =  16
+Enters at  N 2
+Nfft =  16
+Enters at  N 2
+ at level =  4 Combine two  N =  2
+ at level =  2 Combine two  N =  4
+Nfft =  16
+Enters at  N 8
+Calls at twice at N =  4
+Nfft =  16
+Enters at  N 4
+Calls at twice at N =  2
+Nfft =  16
+Enters at  N 2
+Nfft =  16
+Enters at  N 2
+ at level =  4 Combine two  N =  2
+Nfft =  16
+Enters at  N 4
+Calls at twice at N =  2
+Nfft =  16
+Enters at  N 2
+Nfft =  16
+Enters at  N 2
+ at level =  4 Combine two  N =  2
+ at level =  2 Combine two  N =  4
+ at level =  1 Combine two  N =  8
+ k = 0  Ftilde =   (0.000,0.000)
+ k = 1  Ftilde =   (0.000,16.000)
+ k = 2  Ftilde =   (-0.000,-0.000)
+ k = 3  Ftilde =   (32.000,0.000)
+ k = 4  Ftilde =   (-64.000,-0.000)
+ k = 5  Ftilde =   (-0.000,0.000)
+ k = 6  Ftilde =   (0.000,-0.000)
+ k = 7  Ftilde =   (-0.000,-0.000)
+ k = 8  Ftilde =   (-0.000,0.000)
+ k = 9  Ftilde =   (-0.000,0.000)
+ k = 10  Ftilde =   (0.000,0.000)
+ k = 11  Ftilde =   (-0.000,0.000)
+ k = 12  Ftilde =   (-64.000,0.000)
+ k = 13  Ftilde =   (32.000,-0.000)
+ k = 14  Ftilde =   (-0.000,0.000)
+ k = 15  Ftilde =   (0.000,-16.000)
+ x =    0 Compare Fnew[x] :            (-4.000,0.000) with F[x]  (-4.000,0.000)
+ x =    1 Compare Fnew[x] :            (2.296,-0.000) with F[x]  (2.296,0.000)
+ x =    2 Compare Fnew[x] :            (6.586,-0.000) with F[x]  (6.586,0.000)
+ x =    3 Compare Fnew[x] :            (-1.848,0.000) with F[x]  (-1.848,0.000)
+ x =    4 Compare Fnew[x] :            (-6.000,0.000) with F[x]  (-6.000,0.000)
+ x =    5 Compare Fnew[x] :            (5.543,-0.000) with F[x]  (5.543,0.000)
+ x =    6 Compare Fnew[x] :            (12.243,0.000) with F[x]  (12.243,0.000)
+ x =    7 Compare Fnew[x] :            (-0.765,0.000) with F[x]  (-0.765,0.000)
+ x =    8 Compare Fnew[x] :           (-12.000,0.000) with F[x]  (-12.000,0.000)
+ x =    9 Compare Fnew[x] :            (-2.296,0.000) with F[x]  (-2.296,0.000)
+ x =   10 Compare Fnew[x] :             (9.414,0.000) with F[x]  (9.414,0.000)
+ x =   11 Compare Fnew[x] :             (1.848,0.000) with F[x]  (1.848,0.000)
+ x =   12 Compare Fnew[x] :          (-10.000,-0.000) with F[x]  (-10.000,0.000)
+ x =   13 Compare Fnew[x] :           (-5.543,-0.000) with F[x]  (-5.543,0.000)
+ x =   14 Compare Fnew[x] :             (3.757,0.000) with F[x]  (3.757,0.000)
+ x =   15 Compare Fnew[x] :            (0.765,-0.000) with F[x]  (0.765,0.000)
