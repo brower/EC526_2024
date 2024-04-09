@@ -1,84 +1,102 @@
+/*******
+Conjugate Gradient 
+
+see 
+https://en.wikipedia.org/wiki/Conjugate_gradient_method
+
+********/
+
 #include <iostream>
 #include <math.h>
 #include <stack>
 using namespace std;
 
-#define Lx  8// 16 
-#define Ly  8 // 16
-#define N  Lx*Ly
-
-
+#define Lx  32 // 16 
+#define Ly  32 // 16
+#define N   Lx * Ly
 
 #define max(a,b) (a>b?a:b)
 #define min(a,b) (a>b?b:a)
 
 inline int mod(int x, int n)
 {
-  return  (n + (x % n))%n;
+  return  ((x % n) + n )%n;
 }
-
 
 inline int nn(int site,int mu)
 {
-  int x,y;
-  int xp, xm, yp, ym;
   int neighbor;
+  int x,y;
   
   x = site%Lx; y = site/Lx;
-  xp = mod(x+1,Lx); xm =  mod(x-1,Lx); yp  = mod(y+1,Ly); ym =  mod(y-1,Ly);
   
   switch(mu){
-  case 0:  neighbor =  xp + Lx*y;break; // x + 1 
-  case 1:  neighbor =  x + Lx*yp;  break; // y + 1
-  case 2:  neighbor =  xm + Lx*y; break;  // x -1  
-  case 3:  neighbor =  x + Lx*ym; break;  // y - 1 
- 
+  case 0:  neighbor =  (x+1)%Lx + Lx*y;break; // x + 1
+  case 1:  neighbor =  (x-1 + Lx)%Lx + Lx*y; break;  // x -1  
+  case 2:  neighbor =  x + Lx*((y+1)%Ly);  break; // y + 1
+  case 3:  neighbor =  x + Lx*((y-1+Ly)%Ly); break;  // y - 1 
   default: neighbor = -1;
   }
-  return neighbor;
+
+
+    return neighbor; 
 }
-double  CGiter(double * x, double * b, int Niter);
+
+int  CGiter(double * x, double * b, int NoIter, double rs_stop);
 int Avec(double * vec_out, double * vec_in);
-double dotA(double * v1, double * v2);
 double dot(double * v1,double * v2);
+int GaussSeidel(double * x, double * b, double rs_stop); // to check for bugs
 void printArray(double * phi);
+void printState(double  * phi, int iter);
 
 int main()
 {
-
+  printf(" Lattice %d by %d  with %d sites \n", Lx, Ly,N);
   double  phi[N], b[N];
-
   srand(137);
-  // Sample Spin random Configuration
+ 
   for(int i = 0; i < N ; i++) {
-    rand()%2 == 0 ? phi[i] = 1.0 : phi[i] = -1.0;
+    phi[i] = 0.0;
     b[i] = 0.0;
   }
-
-  b[Lx/2 + Lx* Ly/2] = 10;
-
-    printArray(phi);
-      printArray(b);
-    
-  Avec(phi, b);
+  
+  b[Lx/4 + Lx* (Ly/2)] = 10;
+  b[3*Lx/4 + Lx* (Ly/2)] = - 10;
+  
+  double  rms_stop =  1.0e-07;
+  int numOfiter = 0 ;
+  numOfiter = CGiter(phi,  b, 1000, rms_stop);
   printArray(phi);
-1
-   CGiter(phi,  b, 1);
-
-  printArray(phi);
-   
+  cout << " Number of interation of CG/ = " <<  numOfiter << " at rms_stop = " <<  rms_stop   <<  endl;
+  
+#if 1
+  // re-intializex
+   for(int i = 0; i < N ; i++) {
+    phi[i] = 0.0;
+    b[i] = 0.0;
+  }
+   b[Lx/4 + Lx* (Ly/2)] = 10;
+   b[3*Lx/4 + Lx* (Ly/2)] = - 10;
+  
+  int skip = 2;
+      
+      CGiter(phi,  b, skip, rms_stop);
+      
+#endif
+  
   return 0;
 }
 
 int Avec(double * vec_out, double * vec_in)
 {
+  double mass = 0.01;
   for(int i = 0; i < N; i++)
     {
-      vec_out[i] = vec_in[i];
-	for(int mu = 0; mu <4; mu++)
+      vec_out[i] = (1.0 + mass*mass)* vec_in[i];
+        for(int mu = 0; mu < 4; mu++)
 	  {
-	    vec_out[i] -= 0.25 * vec_in[nn(i, mu)];
-	  }
+       	   vec_out[i] = vec_out[i] - 0.25 * vec_in[nn(i, mu)];				   
+	}
     }   
   return 0;
 }
@@ -89,64 +107,91 @@ double dot(double *  v1, double  * v2)
   
   for(int site = 0; site < N; site++)
     scalar += v1[site]*v2[site];
-  
+
   return scalar;
 }
 
 
+/******  Without preconditing *********/
 
-double dotA(double * Av1, double * v2)
-{
-  double scalar = 0.0;
-
-Avec(Av1, v2);
-
-for(int site = 0; site < N; site++)
-  scalar += v2[site]*Av1[site];
-
-return scalar;
-}
-
-double  CGiter(double * x, double * b, int Niter)
+int   CGiter(double * x, double * b,  int skip, double rs_stop)
 {
   double r[N], p[N];
   double Ax[N], Ap[N];
-  double alpha;
+  double alpha,beta;
   double rsold, rsnew;
-    
-  Avec(Ax,x);
+  int iter = -1;
+  int MaxIter = 1000;
+  int frame = 0;
   
-  for(int i =0; i < N; i++)
+  
+  // Intialize
+  Avec(Ax, x);
+  for(int i = 0; i < N; i++)
     {
       r[i] = b[i] - Ax[i];
-      p[i] =r[i];
-    };
+      p[i] =r[i]; 
+    }
   
-  for(int iter =0; iter < Niter; iter++)
-    {  Avec(Ap, p);
-      alpha = rsold / dotA(p,Ap);
-      for(int i =0 ; i < N ; i++)
+  if (dot(r,r) < rs_stop) return iter;  // no need to iterate!
+  
+  for(iter = 0 ; iter <MaxIter; iter++)
+    {
+      rsold = dot(r,r);
+      Avec(Ap, p);
+      alpha = rsold / dot(p,Ap);
+      
+      for(int i = 0 ; i < N ; i++)
 	{
 	  x[i] = x[i] + alpha * p[i];
 	  r[i] = r[i] - alpha * Ap[i];
-	};
-      rsnew = dot(r,r);
-      if (sqrt(rsnew) < 0.0000001) break;
-      for(int i =0 ; i < N ; i++)
-	{  
-	p[i] = r[i] + (rsnew/rsold)* p[i];
-	};
+	}
       
-      rsold = rsnew;
-    }
-
-  return rsnew;
-  
+      rsnew = dot(r,r);
+ 
+      if (rsnew < rs_stop) break;
+      beta = rsnew/rsold;
+      
+      for(int i = 0 ; i < N ; i++)
+	p[i] = r[i] + beta* p[i];
+      
+      
+      if(iter % skip == 0 && iter < 25*skip)
+	{
+	  printState(x, frame);
+	  frame += 1;
+	 	  
+	}
+     
+    }    
+      // cout << "Final Residual Squared " << rsnew << endl;
+      return iter;     
 }
 
-
-									    
+void printState(double  * phi, int frame)
+{
+  FILE* fptr = NULL;  // C style
+  char out_name[64];
+  sprintf(out_name,"data/CGstate_%d_%d.dat",N,frame); // filename
+  fptr = fopen(out_name,"w");
+  if(fptr == NULL)
+    {
+      printf("Error!");   
+      exit(1);             
+    }
   
+  for(int y = 0; y<Ly; y++)
+	{
+	  cout << endl;
+	  for(int x= 0 ; x<Lx; x++)
+	    {
+	      fprintf(fptr," %10.5f ", phi[x + y* Lx]);
+	    }
+	  fprintf(fptr,"\n");
+	}
+  fclose(fptr);
+}
+ 
 void printArray(double * phi)
 {
 	cout<<"\n--------------------------------------------";
